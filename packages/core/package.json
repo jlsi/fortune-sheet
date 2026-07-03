@@ -10,7 +10,7 @@
   "repository": "https://github.com/jlsi/fortune-sheet",
   "license": "MIT",
   "dependencies": {
-    "@jlsi/sheet-formula-parser": "^0.2.13",
+    "@jlsi/sheet-formula-parser": "^0.0.3",
     "dayjs": "^1.11.0",
     "immer": "^9.0.12",
     "lodash": "^4.17.21",
