@@ -68,7 +68,7 @@ _applyOp(ops)_
 
 通常用于在线协同场景，用来同步数据。
 
-更多可见 [Collabration demo](https://github.com/ruilisi/fortune-sheet/blob/master/stories/Collabration.stories.tsx) for an example usage.
+更多可见 [Collabration demo](https://github.com/jlsi/fortune-sheet/blob/master/stories/Collabration.stories.tsx) for an example usage.
 
 | 参数 | 类型 | 描述 |
 | ----- | ----- | ------ |
@@ -635,7 +635,7 @@ _redo()_
 
 ---​    
 
-使用例子请查看 [Collabration demo](https://github.com/ruilisi/fortune-sheet/blob/master/stories/Collabration.stories.tsx).
+使用例子请查看 [Collabration demo](https://github.com/jlsi/fortune-sheet/blob/master/stories/Collabration.stories.tsx).
 
 
 ---

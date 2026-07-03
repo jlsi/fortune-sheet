@@ -14,7 +14,7 @@ import {
   isShowHidenCR,
   escapeHTMLTag,
   isAllowEdit,
-} from "@fortune-sheet/core";
+} from "@jlsi/sheet-core";
 import React, {
   useContext,
   useState,

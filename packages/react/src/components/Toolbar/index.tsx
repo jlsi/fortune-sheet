@@ -34,7 +34,7 @@ import {
   createFilter,
   clearFilter,
   applyLocation,
-} from "@fortune-sheet/core";
+} from "@jlsi/sheet-core";
 import _ from "lodash";
 import WorkbookContext from "../../context";
 import "./index.css";
