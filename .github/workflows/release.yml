@@ -1,40 +1,66 @@
-name: Release
+name: Publish GitHub Packages
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish, for example 1.0.5"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: Set publish version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+
+          VERSION="$VERSION" node -e 'const v = process.env.VERSION; if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(v)) { console.error(`Invalid publish version: ${v}`); process.exit(1); }'
+          echo "TAG_VERSION=$VERSION" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-          registry-url: "https://registry.npmjs.org"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@jlsi"
           cache: "yarn"
+      - run: corepack enable
       - run: yarn install --frozen-lockfile
       - run: yarn tsc
       - run: yarn lint
       - run: yarn test
       - run: yarn build
+      - name: Apply publish version to packages
+        run: |
+          npm --prefix packages/formula-parser version "$TAG_VERSION" --no-git-tag-version --allow-same-version
+          npm --prefix packages/core version "$TAG_VERSION" --no-git-tag-version --allow-same-version
+          npm --prefix packages/react version "$TAG_VERSION" --no-git-tag-version --allow-same-version
+          npm --prefix packages/core pkg set "dependencies.@jlsi/sheet-formula-parser=^$TAG_VERSION"
+          npm --prefix packages/react pkg set "dependencies.@jlsi/sheet-core=^$TAG_VERSION"
+      - run: cd packages/formula-parser && npm pack
       - run: cd packages/core && npm pack
       - run: cd packages/react && npm pack
-      - run: cd packages/formula-parser && npm pack
       - uses: actions/upload-artifact@v4
         with:
           name: packages
           path: |
-            packages/core/fortune-sheet-core-*.tgz
-            packages/react/fortune-sheet-react-*.tgz
-            packages/formula-parser/fortune-sheet-formula-parser-*.tgz
+            packages/formula-parser/jlsi-sheet-formula-parser-*.tgz
+            packages/core/jlsi-sheet-core-*.tgz
+            packages/react/jlsi-sheet-react-*.tgz
+      - run: cd packages/formula-parser && npm publish
       - run: cd packages/core && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: cd packages/react && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: cd packages/formula-parser && npm publish || true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

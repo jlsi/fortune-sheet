@@ -46,7 +46,7 @@ Before stable release of 1.0, input data structure and APIs may change during de
 - Written fully in typescript.
 - You can now use `import` / `require` to use the library.
   ```js
-  import { Workbook } from '@fortune-sheet/react'
+  import { Workbook } from '@jlsi/sheet-react'
   ```
 - Multiple instance on the same page is supported.
 - Dropped `jQuery` dependency, uses native `React` / `Vue` + `immer` to manage the dom and state.
@@ -112,7 +112,7 @@ See detailed documentation at [fortune-sheet-doc](https://ruilisi.github.io/fort
 <summary>Using npm</summary>
 
 ```shell
-npm install @fortune-sheet/react
+npm install @jlsi/sheet-react
 ```
 </details>
 
@@ -120,7 +120,7 @@ npm install @fortune-sheet/react
 <summary>Using pnpm</summary>
 
 ```shell
-pnpm install @fortune-sheet/react
+pnpm install @jlsi/sheet-react
 ```
 </details>
 
@@ -128,7 +128,7 @@ pnpm install @fortune-sheet/react
 <summary>Using yarn</summary>
 
 ```shell
-yarn add @fortune-sheet/react
+yarn add @jlsi/sheet-react
 ```
 </details>
 
@@ -150,8 +150,8 @@ yarn add @fortune-sheet/react
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Workbook } from "@fortune-sheet/react";
-import "@fortune-sheet/react/dist/index.css"
+import { Workbook } from "@jlsi/sheet-react";
+import "@jlsi/sheet-react/dist/index.css"
 
 ReactDOM.render(
   <Workbook data={[{ name: "Sheet1" }]} />,

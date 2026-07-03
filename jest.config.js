@@ -10,8 +10,16 @@ const moduleNameMapper = {
   uuid: require.resolve("uuid"),
 };
 
+const packageNameByDir = {
+  core: "@jlsi/sheet-core",
+  react: "@jlsi/sheet-react",
+  "formula-parser": "@jlsi/sheet-formula-parser",
+};
+
 pkgList.forEach((shortName) => {
-  const name = `@fortune-sheet/${shortName}`;
+  const name = packageNameByDir[shortName];
+  if (!name) return;
+
   // Workaround for Jest not having ESM support yet
   // See: https://github.com/uuidjs/uuid/issues/451
   moduleNameMapper[name] = join(__dirname, `./packages/${shortName}/src`);

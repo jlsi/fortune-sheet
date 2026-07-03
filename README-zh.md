@@ -41,7 +41,7 @@
 - 完全使用typescript编写。
 - 可以用 `import` / `require` 导入本库了。
   ```js
-  import { Workbook } from '@fortune-sheet/react'
+  import { Workbook } from '@jlsi/sheet-react'
   ```
 - 同页面支持多个实例。
 - 去掉了 `jQuery` 的依赖, 用原生 `React` / `Vue` + `immer` 来管理Dom和状态。
@@ -104,7 +104,7 @@
 <summary>使用 npm</summary>
 
 ```shell
-npm install @fortune-sheet/react
+npm install @jlsi/sheet-react
 ```
 </details>
 
@@ -112,7 +112,7 @@ npm install @fortune-sheet/react
 <summary>使用 pnpm</summary>
 
 ```shell
-pnpm install @fortune-sheet/react
+pnpm install @jlsi/sheet-react
 ```
 </details>
 
@@ -120,7 +120,7 @@ pnpm install @fortune-sheet/react
 <summary>使用 yarn</summary>
 
 ```shell
-yarn add @fortune-sheet/react
+yarn add @jlsi/sheet-react
 ```
 </details>
 
@@ -142,8 +142,8 @@ yarn add @fortune-sheet/react
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Workbook } from "@fortune-sheet/react";
-import "@fortune-sheet/react/dist/index.css"
+import { Workbook } from "@jlsi/sheet-react";
+import "@jlsi/sheet-react/dist/index.css"
 
 ReactDOM.render(
   <Workbook data={[{ name: "Sheet1" }]} />,

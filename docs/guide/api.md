@@ -69,7 +69,7 @@ Applys an array of op to the workbook.
 
 This api is typically used in online collabration to sync data.
 
-See [Collabration demo](https://github.com/ruilisi/fortune-sheet/blob/master/stories/Collabration.stories.tsx) for an example usage.
+See [Collabration demo](https://github.com/jlsi/fortune-sheet/blob/master/stories/Collabration.stories.tsx) for an example usage.
 
 | Param | Type | Description |
 | ----- | ----- | ------ |
@@ -434,7 +434,7 @@ Like `setCellFormat`, but set multiple cell formats in one shot.
 Example:
 
 ```tsx
-import { Workbook, WorkbookInstance } from "@fortune-sheet/react";
+import { Workbook, WorkbookInstance } from "@jlsi/sheet-react";
 
 const ExampleComponent = () => {
   const ref = useRef < WorkbookInstance > null;
@@ -653,7 +653,7 @@ Undo previous action.
 
 ---
 
-The usage example [Collabration demo](https://github.com/ruilisi/fortune-sheet/blob/master/stories/Collabration.stories.tsx).
+The usage example [Collabration demo](https://github.com/jlsi/fortune-sheet/blob/master/stories/Collabration.stories.tsx).
 
 ---
 
