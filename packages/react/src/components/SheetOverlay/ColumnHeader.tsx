@@ -41,6 +41,7 @@ const ColumnHeader: React.FC = () => {
   const allowEditRef = useRef<boolean>(true);
   const sheetIndex = getSheetIndex(context, context.currentSheetId);
   const sheet = sheetIndex == null ? null : context.luckysheetfile[sheetIndex];
+  const allowResize = context.allowEdit !== false;
   const freezeHandleLeft = useMemo(() => {
     if (
       sheet?.frozen?.type === "column" ||
@@ -223,17 +224,19 @@ const ColumnHeader: React.FC = () => {
           left: freezeHandleLeft || 0,
         }}
       />
-      <div
-        className="fortune-cols-change-size"
-        ref={colChangeSizeRef}
-        id="fortune-cols-change-size"
-        onMouseDown={onColSizeHandleMouseDown}
-        style={{
-          left:
-            hoverLocation.col - 5 + (hoverInFreeze ? context.scrollLeft : 0),
-          opacity: context.luckysheet_cols_change_size ? 1 : 0,
-        }}
-      />
+      {allowResize && (
+        <div
+          className="fortune-cols-change-size"
+          ref={colChangeSizeRef}
+          id="fortune-cols-change-size"
+          onMouseDown={onColSizeHandleMouseDown}
+          style={{
+            left:
+              hoverLocation.col - 5 + (hoverInFreeze ? context.scrollLeft : 0),
+            opacity: context.luckysheet_cols_change_size ? 1 : 0,
+          }}
+        />
+      )}
       {!context.luckysheet_cols_change_size && hoverLocation.col_index >= 0 ? (
         <div
           className="fortune-col-header-hover"

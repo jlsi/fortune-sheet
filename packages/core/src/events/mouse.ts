@@ -5228,6 +5228,11 @@ export function handleColSizeHandleMouseDown(
   workbookContainer: HTMLDivElement,
   cellArea: HTMLDivElement
 ) {
+  if (ctx.allowEdit === false) {
+    e.stopPropagation();
+    return;
+  }
+
   // //有批注在编辑时
   removeEditingComment(ctx, globalCache);
 
@@ -5289,6 +5294,11 @@ export function handleRowSizeHandleMouseDown(
   workbookContainer: HTMLDivElement,
   cellArea: HTMLDivElement
 ) {
+  if (ctx.allowEdit === false) {
+    e.stopPropagation();
+    return;
+  }
+
   // 有批注在编辑时
   removeEditingComment(ctx, globalCache);
 
