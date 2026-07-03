@@ -8,6 +8,7 @@
     "es",
     "lib"
   ],
+  "repository": "https://github.com/jlsi/fortune-sheet",
   "scripts": {
     "clean": "rimraf tmp coverage",
     "lint": "eslint src test",
