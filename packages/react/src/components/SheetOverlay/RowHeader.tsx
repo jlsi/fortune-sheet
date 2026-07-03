@@ -35,6 +35,7 @@ const RowHeader: React.FC = () => {
   const [selectedLocation, setSelectedLocation] = useState<
     { row: number; row_pre: number; r1: number; r2: number }[]
   >([]);
+  const allowResize = context.allowEdit !== false;
   const sheetIndex = getSheetIndex(context, context.currentSheetId);
   const sheet = sheetIndex == null ? null : context.luckysheetfile[sheetIndex];
   const freezeHandleTop = useMemo(() => {
@@ -213,15 +214,18 @@ const RowHeader: React.FC = () => {
           top: freezeHandleTop || 0,
         }}
       />
-      <div
-        className="fortune-rows-change-size"
-        ref={rowChangeSizeRef}
-        onMouseDown={onRowSizeHandleMouseDown}
-        style={{
-          top: hoverLocation.row - 3 + (hoverInFreeze ? context.scrollTop : 0),
-          opacity: context.luckysheet_rows_change_size ? 1 : 0,
-        }}
-      />
+      {allowResize && (
+        <div
+          className="fortune-rows-change-size"
+          ref={rowChangeSizeRef}
+          onMouseDown={onRowSizeHandleMouseDown}
+          style={{
+            top:
+              hoverLocation.row - 3 + (hoverInFreeze ? context.scrollTop : 0),
+            opacity: context.luckysheet_rows_change_size ? 1 : 0,
+          }}
+        />
+      )}
       {!context.luckysheet_rows_change_size && hoverLocation.row_index >= 0 ? (
         <div
           className="fortune-row-header-hover"
