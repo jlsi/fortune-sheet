@@ -73,6 +73,7 @@ import {
 
 let mouseWheelUniqueTimeout: ReturnType<typeof setTimeout>;
 let scrollLockTimeout: ReturnType<typeof setTimeout>;
+const ROW_BOUNDARY_TOLERANCE_PX = 1;
 
 export function handleGlobalWheel(
   ctx: Context,
@@ -121,7 +122,18 @@ export function handleGlobalWheel(
   // visibledatacolumn_c = ArrayUnique(visibledatacolumn_c);
   // visibledatarow_c = ArrayUnique(visibledatarow_c);
 
-  const row_st = _.sortedIndex(visibledatarow_c, scrollTop) + 1;
+  let rowInsertionIndex = _.sortedIndex(visibledatarow_c, scrollTop);
+  // At non-default display scaling, browsers can report scrollTop slightly
+  // past the integer row boundary that was assigned to the scrollbar.
+  if (
+    rowInsertionIndex > 0 &&
+    scrollTop - visibledatarow_c[rowInsertionIndex - 1] <=
+      ROW_BOUNDARY_TOLERANCE_PX
+  ) {
+    rowInsertionIndex -= 1;
+  }
+  const row_st =
+    scrollTop <= ROW_BOUNDARY_TOLERANCE_PX ? 0 : rowInsertionIndex + 1;
 
   // if (luckysheetFreezen.freezenhorizontaldata != null) {
   //   row_st = luckysheet_searcharray(

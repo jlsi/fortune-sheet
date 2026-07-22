@@ -6,6 +6,7 @@ import {
   handleCellAreaDoubleClick,
   handleColSizeHandleMouseDown,
   handleRowSizeHandleMouseDown,
+  handleGlobalWheel,
 } from "../../src/events/mouse";
 
 describe("mouse", () => {
@@ -181,5 +182,34 @@ describe("mouse", () => {
 
     expect(ctx.luckysheet_rows_change_size).toBe(false);
     expect(ctx.luckysheet_rows_change_size_start).toEqual([]);
+  });
+
+  test("wheel scroll starts from the first row", () => {
+    const ctx = getContext();
+    ctx.visibledatacolumn = [72, 144];
+    ctx.visibledatarow = Array.from({ length: 100 }, (_, i) => (i + 1) * 20);
+    ctx.zoomRatio = 1;
+    const wheelEvent = new WheelEvent("wheel", { deltaY: 100 });
+    const scrollbarX = document.createElement("div");
+    const scrollbarY = document.createElement("div");
+
+    handleGlobalWheel(ctx, wheelEvent, {}, scrollbarX, scrollbarY);
+
+    expect(scrollbarY.scrollTop).toBe(20);
+  });
+
+  test("wheel scrolls up from a subpixel position past a row boundary", () => {
+    const ctx = getContext();
+    ctx.visibledatacolumn = [72, 144];
+    ctx.visibledatarow = [29, 48, 91, 334, 658, 901, 1225, 1254];
+    ctx.zoomRatio = 1;
+    const wheelEvent = new WheelEvent("wheel", { deltaY: -100 });
+    const scrollbarX = document.createElement("div");
+    const scrollbarY = document.createElement("div");
+    scrollbarY.scrollTop = 1225.3585205078125;
+
+    handleGlobalWheel(ctx, wheelEvent, {}, scrollbarX, scrollbarY);
+
+    expect(scrollbarY.scrollTop).toBe(901);
   });
 });
